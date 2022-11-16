@@ -1,0 +1,222 @@
+:root {
+  --color-blue: #00a1ff;
+  --color-green: #60d937;
+  --color-yellow: #feae00;
+  --color-red: #ed220d;
+  --color-white: white;
+  --color-black: #242425;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+button {
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+li {
+  list-style: none;
+}
+
+/* HEADER */
+header {
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 76px;
+  padding: 20px;
+  background-color: var(--color-white);
+  z-index: 1;
+}
+
+header .date {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 140px;
+  height: 36px;
+  padding: 0 7vw;
+  border-radius: 20px;
+  -webkit-box-shadow: 0px 3px 6px -2px rgba(0, 0, 0, 0.8);
+  box-shadow: 0px 3px 6px -2px rgba(0, 0, 0, 0.8);
+}
+
+header .date span {
+  font-size: 24px;
+}
+
+header .options {
+  display: flex;
+  margin: 0;
+}
+
+header .options li span {
+  font-size: 20px;
+}
+
+header .options .myRegion,
+header .options .option,
+header .options .favorites {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  margin-right: 8px;
+  padding: 0 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  -webkit-box-shadow: 0px 3px 6px -2px rgba(0, 0, 0, 0.8);
+  box-shadow: 0px 3px 6px -2px rgba(0, 0, 0, 0.8);
+}
+
+header .options .myRegion:hover,
+header .options .option:hover,
+header .options .favorites:hover {
+  color: var(--color-white);
+  background-color: var(--color-black);
+}
+
+header .options .option {
+  display: flex;
+  flex-direction: column;
+  width: 140px;
+  padding: 6px;
+}
+
+header .options .option:hover {
+  border-radius: 20px 20px 0 0;
+}
+
+header .options .option:hover .regions {
+  display: block;
+  border-radius: 0 0 20px 20px;
+}
+
+header .options .option:hover .regions .region:hover {
+  color: var(--color-black);
+  background-color: var(--color-white);
+}
+
+header .options .option:hover .regions .region:last-child {
+  border-radius: 0 0 20px 20px;
+}
+
+header .options .option .regions {
+  display: none;
+  text-align: center;
+  width: 140px;
+  margin-top: 6px;
+  padding: 0;
+  background-color: var(--color-black);
+}
+
+header .options .option .regions .region {
+  padding: 6px;
+}
+
+header .options .option .regions .divide-line {
+  width: 120px;
+  height: 1px;
+  background-color: var(--color-white);
+}
+
+/* MAIN */
+.main {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  height: calc(100% - 76px);
+  margin-top: 76px;
+}
+
+.main .box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 30%;
+  min-width: 340px;
+  height: 40%;
+  margin: 1.5%;
+  border-radius: 20px;
+  font-size: 24px;
+  color: var(--color-white);
+  background-color: var(--color-blue);
+  -webkit-box-shadow: 0px 3px 6px -2px rgba(0, 0, 0, 0.8);
+  box-shadow: 0px 3px 6px -2px rgba(0, 0, 0, 0.8);
+  transition: 0.3s;
+}
+
+.main .box:hover {
+  transform: scale(1.1);
+}
+
+.main .box .regionAndBtn {
+  display: flex;
+  justify-content: space-between;
+  width: 96%;
+  margin: 8px 0;
+}
+
+.main .box .regionAndBtn .region {
+  margin-left: 8px;
+}
+
+.main .box .regionAndBtn .region .district {
+  font-size: 16px;
+}
+
+.main .box .regionAndBtn .favorite-btn {
+  padding: 0;
+}
+
+.main .box .regionAndBtn .favorite-btn span {
+  font-size: 32px;
+  color: var(--color-white);
+  transition: 0.3s;
+}
+
+.main .box .regionAndBtn .favorite-btn span:hover {
+  color: var(--color-yellow);
+}
+
+.main .box .state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 40%;
+  border-radius: 20px;
+  color: var(--color-blue);
+  background-color: var(--color-white);
+  -webkit-box-shadow: 0px 3px 6px -2px rgba(0, 0, 0, 0.8);
+  box-shadow: 0px 3px 6px -2px rgba(0, 0, 0, 0.8);
+}
+
+.main .box .state span {
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.main .box .dust-value {
+  margin-bottom: 20px;
+}
+
+.main .box.box3 {
+  background-color: var(--color-green);
+}
+
+.main .box.box3 .state span {
+  color: var(--color-green);
+}
