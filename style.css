@@ -308,9 +308,6 @@ header .options .option .regions .divide-line {
   font-weight: 600;
 }
 
-.pop-up .pop-up__card .texts .regionAndStation .region {
-}
-.pop-up .pop-up__card .texts .regionAndStation .region,
 .pop-up .pop-up__card .texts .temp-cur {
   font-size: calc(3vmin + 4px);
 }
@@ -340,28 +337,25 @@ header .options .option .regions .divide-line {
   border-radius: 20px;
 }
 
-.pop-up .pop-up__info .back,
-.pop-up .pop-up__info .temp-avg,
 .pop-up .pop-up__info .temp-max-min {
   height: 6vmin;
-  font-size: calc(3vmin + 6px);
+  font-size: 3vmin;
   -webkit-box-shadow: 0px 3px 6px -2px rgba(0, 0, 0, 0.8);
   box-shadow: 0px 3px 6px -2px rgba(0, 0, 0, 0.8);
 }
 
 .pop-up .pop-up__info .back {
   cursor: pointer;
+  height: 5vmin;
+  font-size: 3vmin;
+  -webkit-box-shadow: 0px 3px 6px -2px rgba(0, 0, 0, 0.8);
+  box-shadow: 0px 3px 6px -2px rgba(0, 0, 0, 0.8);
+  transition: 0.2s;
 }
 
 .pop-up .pop-up__info .back:hover {
   color: var(--color-white);
   background-color: var(--color-black);
-}
-
-.pop-up .pop-up__info .temp-avg {
-}
-
-.pop-up .pop-up__info .temp-max-min {
 }
 
 .pop-up .pop-up__info .good,

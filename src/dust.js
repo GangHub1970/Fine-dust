@@ -2,7 +2,7 @@
 
 import PopUp from "./popup.js";
 
-const API_KEY = config.apikey;
+const DUST_API_KEY = config.dust_apikey;
 const regions = {
   서울특별시: "서울",
   부산광역시: "부산",
@@ -22,9 +22,6 @@ const regions = {
   경상남도: "경남",
   제주특별자치도: "제주",
 };
-
-// const popUp = document.querySelector(".pop-up-cover");
-// const popUpBackBtn = popUp.querySelector('.back');
 
 const popUp = new PopUp();
 
@@ -46,7 +43,7 @@ export default class Dust {
 
   async getSidoDustData(sido) {
     const sidoName = regions[sido];
-    const url = `http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?serviceKey=${API_KEY}&sidoName=${sidoName}&numOfRows=100&returnType=json`;
+    const url = `http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?serviceKey=${DUST_API_KEY}&sidoName=${sidoName}&numOfRows=100&returnType=json`;
     const response = await fetch(url);
     const data = await response.json();
 
@@ -126,10 +123,6 @@ export default class Dust {
       this.main.appendChild(box);
     }
   }
-
-  // popUpToggle() {
-  //   popUp.classList.toggle('hidden')
-  // }
 
   clear() {
     this.main.innerHTML = "";
