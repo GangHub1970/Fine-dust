@@ -20,7 +20,7 @@ function onRegionClick(event) {
   // 클릭했을 때 드롭다운 메뉴 없어지기
   dust.clear();
   dust.getSidoDustData(targetText);
-  stationTitle.textContent = "시/군/구";
+  stationTitle.textContent = "자세히";
   window.scrollTo(0, 0);
 }
 
@@ -45,5 +45,5 @@ dust.getSidoDustData("서울특별시");
 regions.addEventListener("click", onRegionClick);
 stations.addEventListener("click", onStationClick);
 options.forEach((option) => {
-  option.addEventListener("mouseover", option.scrollTo(0, 0));
+  option.addEventListener("onmouseout", option.scrollTo(0, 0));
 });
