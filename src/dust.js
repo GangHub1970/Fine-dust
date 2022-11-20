@@ -25,18 +25,33 @@ const regions = {
 
 const popUp = new PopUp();
 
-export default class Dust {
+export const storage = {};
+
+export class Dust {
   constructor() {
     this.stations = document.querySelector(".stations");
     this.main = document.querySelector(".main");
     this.main.addEventListener("click", (event) => {
-      const target = event.target.closest(".box");
-      if (target) {
-        const targetStation = target.querySelector(".station").textContent;
-        const targetRegion = target.querySelector(".district").textContent;
-        const targetDust = target.querySelector(".value").textContent;
+      const target = event.target;
+      const targetBox = target.closest(".box");
+      if (targetBox) {
+        const station = targetBox.querySelector(".station").textContent;
+        const region = targetBox.querySelector(".district").textContent;
+        const dust = targetBox.querySelector(".value").textContent;
+        const stateColor = targetBox.querySelector(".state").style.color;
+        const stateText = targetBox.querySelector(".state span").textContent;
 
-        popUp.showWithInfo(targetStation, targetRegion, targetDust);
+        if (target.classList[0] === "material-icons") {
+          const favorites = document.querySelector(".favorites");
+
+          if (favorites.classList.contains("favPage")) {
+            if (target.className.includes("picked")) targetBox.remove();
+          }
+          this.btnColorChange(target);
+          this.clickFavBtn(region, station, stateText, stateColor, dust);
+        } else {
+          popUp.showWithInfo(station, region, dust);
+        }
       }
     });
   }
@@ -101,31 +116,65 @@ export default class Dust {
     for (const item of stationsData) {
       const box = document.createElement("div");
       box.setAttribute("class", `box`);
-      box.style.backgroundColor = `${item.color}`;
-      box.innerHTML = `
-        <div class="regionAndBtn">
-          <div class="region">
-            <span class="station">${item.station}</span>
-            <span class="district">${sidoName}</span>
+      box.style.backgroundColor = item.color;
+      if (item.station in storage) {
+        box.innerHTML = `
+          <div class="regionAndBtn">
+            <div class="region">
+              <span class="station">${item.station}</span>
+              <span class="district">${sidoName}</span>
+            </div>
+            <button class="favorite-btn">
+              <span class="material-icons picked" style="color: #feae00"> star_border </span>
+            </button>
           </div>
-          <button class="favorite-btn">
-            <span class="material-icons"> star_border </span>
-          </button>
-        </div>
-        <div class="state" style="color: ${item.color}"}>
-          <span>${item.state}</span>
-        </div>
-        <div class="dust-value">
-          <span class="title">미세먼지 수치 : </span>
-          <span class="value">${item.grade}</span>
-        </div>
-    `;
+          <div class="state" style="color: ${item.color}"}>
+            <span>${item.state}</span>
+          </div>
+          <div class="dust-value">
+            <span class="title">미세먼지 수치 : </span>
+            <span class="value">${item.grade}</span>
+          </div>
+        `;
+      } else {
+        box.innerHTML = `
+          <div class="regionAndBtn">
+            <div class="region">
+              <span class="station">${item.station}</span>
+              <span class="district">${sidoName}</span>
+            </div>
+            <button class="favorite-btn">
+              <span class="material-icons"> star_border </span>
+            </button>
+          </div>
+          <div class="state" style="color: ${item.color}"}>
+            <span>${item.state}</span>
+          </div>
+          <div class="dust-value">
+            <span class="title">미세먼지 수치 : </span>
+            <span class="value">${item.grade}</span>
+          </div>
+        `;
+      }
       this.main.appendChild(box);
     }
   }
 
-  clear() {
-    this.main.innerHTML = "";
-    this.stations.innerHTML = "";
+  btnColorChange(target) {
+    if (target.className.includes("picked")) {
+      target.classList.remove("picked");
+      target.style.color = "white";
+    } else {
+      target.classList.add("picked");
+      target.style.color = "#feae00";
+    }
+  }
+
+  clickFavBtn(region, station, state, color, dust) {
+    if (station in storage) {
+      delete storage[station];
+    } else {
+      storage[station] = { region, station, state, dust, color };
+    }
   }
 }
