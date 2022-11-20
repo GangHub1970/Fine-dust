@@ -85,15 +85,3 @@ options.forEach((option) => {
   option.addEventListener("onmouseout", option.scrollTo(0, 0));
 });
 favorites.addEventListener("click", onFavBtnClick);
-
-// const API_KEY = "faf4215147954724d5af374f5b530454";
-
-// function onGeoOk(position) {
-//   console.log(position);
-// }
-
-// function onGeoError() {
-//   alert("Can't find you. No weather for you.");
-// }
-
-// navigator.geolocation.getCurrentPosition(onGeoOk, onGeoError);
