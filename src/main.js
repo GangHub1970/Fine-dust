@@ -55,6 +55,7 @@ function clear() {
 function onFavBtnClick() {
   favorites.classList.add("favPage");
   clear();
+  const fragment = document.createDocumentFragment();
   for (const item in storage) {
     const box = document.createElement("div");
     box.setAttribute("class", `box`);
@@ -77,11 +78,15 @@ function onFavBtnClick() {
         <span class="value">${storage[item].dust}</span>
       </div>
     `;
-    main.appendChild(box);
+    fragment.appendChild(box);
   }
+  main.appendChild(fragment);
 }
 
 function onMyBtnClick() {
+  const loadingIcon = document.querySelector(".loading");
+  loadingIcon.classList.toggle("hidden");
+
   function onGeoOk(position) {
     const lat = position.coords.latitude;
     const lng = position.coords.longitude;

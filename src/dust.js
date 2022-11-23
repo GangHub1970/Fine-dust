@@ -30,6 +30,7 @@ export const storage = {};
 export class Dust {
   constructor() {
     this.stations = document.querySelector(".stations");
+    this.loadingIcon = document.querySelector(".loading");
     this.main = document.querySelector(".main");
     this.main.addEventListener("click", (event) => {
       const target = event.target;
@@ -50,6 +51,7 @@ export class Dust {
           this.btnColorChange(target);
           this.clickFavBtn(region, station, stateText, stateColor, dust);
         } else {
+          this.loadingIcon.classList.toggle("hidden");
           popUp.showWithInfo(station, region, dust);
         }
       }
@@ -121,10 +123,12 @@ export class Dust {
   }
 
   createDatas(stationsData, sidoName) {
+    const fragment = document.createDocumentFragment();
     for (const item of stationsData) {
       const box = document.createElement("div");
       box.setAttribute("class", `box`);
       box.style.backgroundColor = item.color;
+
       if (item.station in storage) {
         box.innerHTML = `
           <div class="regionAndBtn">
@@ -164,8 +168,9 @@ export class Dust {
           </div>
         `;
       }
-      this.main.appendChild(box);
+      fragment.appendChild(box);
     }
+    this.main.appendChild(fragment);
   }
 
   btnColorChange(target) {

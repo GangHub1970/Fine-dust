@@ -159,19 +159,8 @@ header .options .option .regions .divide-line {
 }
 
 header .options .favorites {
-  /* position: relative; */
   padding: 0 20px;
 }
-/* 
-header .options .favorites span {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  display: block;
-  height: 100%;
-  width: 120px;
-  transform: translate(-50%, -50%);
-} */
 
 /* MAIN */
 .main {
@@ -403,6 +392,81 @@ header .options .favorites span {
 
 .pop-up .pop-up__info .very-bad {
   background-color: var(--color-red);
+}
+
+/* LOADING */
+.loading {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #eeeeee90;
+  z-index: 100;
+}
+
+.loading .boxLoading {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  width: 6vw;
+  height: 6vw;
+  margin: auto;
+}
+
+.loading .boxLoading::before {
+  content: "";
+  position: absolute;
+  top: 59px;
+  left: 0;
+  width: 4vw;
+  height: 5px;
+  background: #000;
+  opacity: 0.1;
+  border-radius: 50%;
+  animation: shadow 0.5s linear infinite;
+}
+
+.loading .boxLoading::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 3px;
+  background: #1a6844;
+  animation: animate 0.5s linear infinite;
+}
+
+@keyframes animate {
+  17% {
+    border-bottom-right-radius: 3px;
+  }
+  25% {
+    transform: translateY(9px) rotate(22.5deg);
+  }
+  50% {
+    transform: translateY(18px) scale(1, 0.9) rotate(45deg);
+    border-bottom-right-radius: 40px;
+  }
+  75% {
+    transform: translateY(9px) rotate(67.5deg);
+  }
+  100% {
+    transform: translateY(0) rotate(90deg);
+  }
+}
+
+@keyframes shadow {
+  0%,
+  100% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1.2, 1);
+  }
 }
 
 @media screen and (max-width: 773px) {

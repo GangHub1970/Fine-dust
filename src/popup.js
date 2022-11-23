@@ -43,6 +43,7 @@ export default class PopUp {
   }
 
   async showWithInfo(station, region, dust) {
+    const loadingIcon = document.querySelector(".loading");
     const weatherData = await this.getWeather(region);
     const temp = weatherData.main;
     const weatherIcon = document.querySelector(".print");
@@ -57,6 +58,7 @@ export default class PopUp {
     this.popUpCurTemp.textContent = `현재온도 : ${temp.temp}`;
     this.popUpMinMaxTemp.textContent = `체감온도 : ${temp.feels_like}`;
     this.toggle();
+    loadingIcon.classList.toggle("hidden");
   }
 
   getGrade(dust) {
