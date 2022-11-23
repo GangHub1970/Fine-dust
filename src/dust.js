@@ -23,7 +23,7 @@ const regions = {
   제주특별자치도: "제주",
 };
 
-const popUp = new PopUp();
+export const popUp = new PopUp();
 
 export const storage = {};
 
@@ -65,6 +65,14 @@ export class Dust {
     const stationsData = this.getStationsData(data.response.body.items);
     this.createDatas(stationsData, sidoName);
     this.getStations(stationsData);
+  }
+
+  async getMyDustData(sido) {
+    const url = `http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?serviceKey=${DUST_API_KEY}&sidoName=${sido}&numOfRows=100&returnType=json`;
+    const response = await fetch(url);
+    const data = await response.json();
+
+    return data.response.body.items;
   }
 
   getStationsData(sidoData) {
