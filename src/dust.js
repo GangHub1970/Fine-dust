@@ -38,7 +38,7 @@ export class Dust {
       if (targetBox) {
         const station = targetBox.querySelector(".station").textContent;
         const region = targetBox.querySelector(".district").textContent;
-        const dust = targetBox.querySelector(".value").textContent;
+        const grade = targetBox.querySelector(".value").textContent;
         const stateColor = targetBox.querySelector(".state").style.color;
         const stateText = targetBox.querySelector(".state span").textContent;
 
@@ -49,10 +49,10 @@ export class Dust {
             if (target.className.includes("picked")) targetBox.remove();
           }
           this.btnColorChange(target);
-          this.clickFavBtn(region, station, stateText, stateColor, dust);
+          this.clickFavBtn(region, station, stateText, stateColor, grade);
         } else {
           this.loadingIcon.classList.toggle("hidden");
-          popUp.showWithInfo(station, region, dust);
+          popUp.showWithInfo(station, region, grade);
         }
       }
     });
@@ -60,13 +60,11 @@ export class Dust {
 
   async getSidoDustData(sido) {
     const sidoName = regions[sido];
-    const url = `http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?serviceKey=${DUST_API_KEY}&sidoName=${sidoName}&numOfRows=100&returnType=json`;
-    const response = await fetch(url);
-    const data = await response.json();
+    const dustDatas = await this.getMyDustData(sidoName);
+    const stationsData = this.getStationsData(dustDatas);
 
-    const stationsData = this.getStationsData(data.response.body.items);
-    this.createDatas(stationsData, sidoName);
-    this.getStations(stationsData);
+    this.getStationsList(stationsData);
+    this.createDatas(stationsData);
   }
 
   async getMyDustData(sido) {
@@ -106,54 +104,36 @@ export class Dust {
       }
       stationData["state"] = state;
       stationData["color"] = color;
+      stationData["region"] = item.sidoName;
       stationsData.push(stationData);
     }
     return stationsData;
   }
 
-  getStations(stationsData) {
+  getStationsList(stationsData) {
+    const fragment = document.createDocumentFragment();
     for (const stationData of stationsData) {
       const station = document.createElement("li");
       station.setAttribute("class", "region");
       station.innerHTML = `
         <span class="region__text">${stationData.station}</span>
       `;
-      this.stations.appendChild(station);
+      fragment.appendChild(station);
     }
+    this.stations.appendChild(fragment);
   }
 
-  createDatas(stationsData, sidoName) {
+  createDatas(stationsData) {
     const fragment = document.createDocumentFragment();
     for (const item of stationsData) {
       const box = document.createElement("div");
       box.setAttribute("class", `box`);
       box.style.backgroundColor = item.color;
-
-      if (item.station in storage) {
-        box.innerHTML = `
+      box.innerHTML = `
           <div class="regionAndBtn">
             <div class="region">
               <span class="station">${item.station}</span>
-              <span class="district">${sidoName}</span>
-            </div>
-            <button class="favorite-btn">
-              <span class="material-icons picked" style="color: #feae00"> star_border </span>
-            </button>
-          </div>
-          <div class="state" style="color: ${item.color}"}>
-            <span>${item.state}</span>
-          </div>
-          <div class="dust-value">
-            <span class="title">미세먼지 수치 : </span>
-            <span class="value">${item.grade}</span>
-          </div>
-        `;
-      } else {
-        box.innerHTML = `
-          <div class="regionAndBtn">
-            <div class="region">
-              <span class="station">${item.station}</span>
-              <span class="district">${sidoName}</span>
+              <span class="district">${item.region}</span>
             </div>
             <button class="favorite-btn">
               <span class="material-icons"> star_border </span>
@@ -167,6 +147,10 @@ export class Dust {
             <span class="value">${item.grade}</span>
           </div>
         `;
+      if (item.station in storage) {
+        const clickedBox = box.querySelector(".favorite-btn span");
+        clickedBox.classList.add("picked");
+        clickedBox.style.color = "#feae00";
       }
       fragment.appendChild(box);
     }
@@ -187,7 +171,7 @@ export class Dust {
     if (station in storage) {
       delete storage[station];
     } else {
-      storage[station] = { region, station, state, dust, color };
+      storage[station] = { region, station, state, color, grade: dust };
     }
   }
 }

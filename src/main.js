@@ -17,9 +17,9 @@ const options = document.querySelectorAll(".option");
 const myRegion = document.querySelector(".myRegion");
 const favorites = document.querySelector(".favorites");
 
+const myData = {};
 const dust = new Dust();
 dust.getSidoDustData("서울특별시");
-const myData = {};
 
 function onRegionClick(event) {
   const targetText = event.target.textContent;
@@ -55,32 +55,7 @@ function clear() {
 function onFavBtnClick() {
   favorites.classList.add("favPage");
   clear();
-  const fragment = document.createDocumentFragment();
-  for (const item in storage) {
-    const box = document.createElement("div");
-    box.setAttribute("class", `box`);
-    box.style.backgroundColor = storage[item].color;
-    box.innerHTML = `
-      <div class="regionAndBtn">
-        <div class="region">
-          <span class="station">${storage[item].station}</span>
-          <span class="district">${storage[item].region}</span>
-        </div>
-        <button class="favorite-btn">
-          <span class="material-icons picked" style="color: #feae00"> star_border </span>
-        </button>
-      </div>
-      <div class="state" style="color: ${storage[item].color}"}>
-        <span>${storage[item].state}</span>
-      </div>
-      <div class="dust-value">
-        <span class="title">미세먼지 수치 : </span>
-        <span class="value">${storage[item].dust}</span>
-      </div>
-    `;
-    fragment.appendChild(box);
-  }
-  main.appendChild(fragment);
+  dust.createDatas(Object.values(storage));
 }
 
 function onMyBtnClick() {
